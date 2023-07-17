@@ -19,10 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MemberService_Testing_FullMethodName   = "/MemberService/Testing"
-	MemberService_Create_FullMethodName    = "/MemberService/Create"
-	MemberService_LogIn_FullMethodName     = "/MemberService/LogIn"
-	MemberService_ChangePwd_FullMethodName = "/MemberService/ChangePwd"
+	MemberService_Testing_FullMethodName     = "/MemberService/Testing"
+	MemberService_Create_FullMethodName      = "/MemberService/Create"
+	MemberService_LogIn_FullMethodName       = "/MemberService/LogIn"
+	MemberService_ChangePwd_FullMethodName   = "/MemberService/ChangePwd"
+	MemberService_IsValidJwt_FullMethodName  = "/MemberService/IsValidJwt"
+	MemberService_IsJwtInTime_FullMethodName = "/MemberService/IsJwtInTime"
 )
 
 // MemberServiceClient is the client API for MemberService service.
@@ -34,6 +36,8 @@ type MemberServiceClient interface {
 	Create(ctx context.Context, in *CreateReq, opts ...grpc.CallOption) (*CreateRes, error)
 	LogIn(ctx context.Context, in *LogInReq, opts ...grpc.CallOption) (*LogInRes, error)
 	ChangePwd(ctx context.Context, in *ChangePwdReq, opts ...grpc.CallOption) (*ChangePwdRes, error)
+	IsValidJwt(ctx context.Context, in *JwtToken, opts ...grpc.CallOption) (*IsValidJwtRes, error)
+	IsJwtInTime(ctx context.Context, in *JwtToken, opts ...grpc.CallOption) (*IsJwtInTimeRes, error)
 }
 
 type memberServiceClient struct {
@@ -80,6 +84,24 @@ func (c *memberServiceClient) ChangePwd(ctx context.Context, in *ChangePwdReq, o
 	return out, nil
 }
 
+func (c *memberServiceClient) IsValidJwt(ctx context.Context, in *JwtToken, opts ...grpc.CallOption) (*IsValidJwtRes, error) {
+	out := new(IsValidJwtRes)
+	err := c.cc.Invoke(ctx, MemberService_IsValidJwt_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *memberServiceClient) IsJwtInTime(ctx context.Context, in *JwtToken, opts ...grpc.CallOption) (*IsJwtInTimeRes, error) {
+	out := new(IsJwtInTimeRes)
+	err := c.cc.Invoke(ctx, MemberService_IsJwtInTime_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MemberServiceServer is the server API for MemberService service.
 // All implementations must embed UnimplementedMemberServiceServer
 // for forward compatibility
@@ -89,6 +111,8 @@ type MemberServiceServer interface {
 	Create(context.Context, *CreateReq) (*CreateRes, error)
 	LogIn(context.Context, *LogInReq) (*LogInRes, error)
 	ChangePwd(context.Context, *ChangePwdReq) (*ChangePwdRes, error)
+	IsValidJwt(context.Context, *JwtToken) (*IsValidJwtRes, error)
+	IsJwtInTime(context.Context, *JwtToken) (*IsJwtInTimeRes, error)
 	mustEmbedUnimplementedMemberServiceServer()
 }
 
@@ -107,6 +131,12 @@ func (UnimplementedMemberServiceServer) LogIn(context.Context, *LogInReq) (*LogI
 }
 func (UnimplementedMemberServiceServer) ChangePwd(context.Context, *ChangePwdReq) (*ChangePwdRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangePwd not implemented")
+}
+func (UnimplementedMemberServiceServer) IsValidJwt(context.Context, *JwtToken) (*IsValidJwtRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsValidJwt not implemented")
+}
+func (UnimplementedMemberServiceServer) IsJwtInTime(context.Context, *JwtToken) (*IsJwtInTimeRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IsJwtInTime not implemented")
 }
 func (UnimplementedMemberServiceServer) mustEmbedUnimplementedMemberServiceServer() {}
 
@@ -193,6 +223,42 @@ func _MemberService_ChangePwd_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MemberService_IsValidJwt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JwtToken)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MemberServiceServer).IsValidJwt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MemberService_IsValidJwt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MemberServiceServer).IsValidJwt(ctx, req.(*JwtToken))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MemberService_IsJwtInTime_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(JwtToken)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MemberServiceServer).IsJwtInTime(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MemberService_IsJwtInTime_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MemberServiceServer).IsJwtInTime(ctx, req.(*JwtToken))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MemberService_ServiceDesc is the grpc.ServiceDesc for MemberService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -215,6 +281,14 @@ var MemberService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangePwd",
 			Handler:    _MemberService_ChangePwd_Handler,
+		},
+		{
+			MethodName: "IsValidJwt",
+			Handler:    _MemberService_IsValidJwt_Handler,
+		},
+		{
+			MethodName: "IsJwtInTime",
+			Handler:    _MemberService_IsJwtInTime_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

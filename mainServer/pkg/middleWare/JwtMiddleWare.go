@@ -8,14 +8,16 @@ import (
 )
 
 func InitJwtMiddleWare()(middleWare *JwtMiddleWare){
-
 	var JwtMiddleWare JwtMiddleWare
+
+	tokenController := tokenModule.InitTokenController()
+	JwtMiddleWare.tokenController = *tokenController
  	return &JwtMiddleWare
 }
 
 type JwtMiddleWare struct {
 	base.MiddleWare
-	tokenService tokenModule.TokenService
+	tokenController tokenModule.TokenController
 }
 
 func (m *JwtMiddleWare) ConfirmToken(g *gin.Context){
@@ -26,7 +28,7 @@ func (m *JwtMiddleWare) ConfirmToken(g *gin.Context){
 	}
 	jwtToken := g.Request.Header["Bearer-Token"][0]
 
-	val,err  := m.tokenService.IsValidJwt(jwtToken)
+	val,err  := m.tokenController.IsValidJwt(jwtToken)
 	if err!=nil{
 		m.SystemError(g,err.Error())
 		return
@@ -36,7 +38,7 @@ func (m *JwtMiddleWare) ConfirmToken(g *gin.Context){
 		return
 	}
 
-	val,err  = m.tokenService.IsJwtInTime(jwtToken)
+	val,err  = m.tokenController.IsJwtInTime(jwtToken)
 	if err!=nil{
 		m.SystemError(g,err.Error())
 		return

@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"math/rand"
 	"mainServer/pkg/except"
+	"google.golang.org/grpc"
 	"github.com/gin-gonic/gin"
 	"github.com/hashicorp/consul/api"
 )
@@ -40,6 +41,11 @@ func (b *Service)FindService(serviceName string)(address string ,err error){
 
 	address = fmt.Sprintf("%s:%s" , selectedHost ,strconv.Itoa(selectedPort))
 	return address ,nil
+}
+
+func (b *Service) CreateConn(serviceAddress string)(*grpc.ClientConn ,error){
+	conn, err := grpc.Dial(serviceAddress, grpc.WithInsecure(), grpc.WithBlock())
+	return conn , err
 }
 
 func (b *Service) SuccessRes(g *gin.Context ,result interface{}) {

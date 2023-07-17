@@ -5,7 +5,6 @@ import (
 	"time"
 	"context"
 	pb "mainServer/proto"
-	"google.golang.org/grpc"
 	"mainServer/pkg/base"
 )
 
@@ -21,7 +20,6 @@ func NewMemberService () *MemberService{
 } 
 
 func (m *MemberService) Create(req *pb.CreateReq)(*pb.CreateRes , error){
-
 	var resp  *pb.CreateRes
 
 	serviceAddress ,err := m.FindService(m.ServicName)
@@ -47,7 +45,54 @@ func (m *MemberService) Create(req *pb.CreateReq)(*pb.CreateRes , error){
 	}
 }
 
-func (m *MemberService) CreateConn(serviceAddress string)(*grpc.ClientConn ,error){
-	conn, err := grpc.Dial(serviceAddress, grpc.WithInsecure(), grpc.WithBlock())
-	return conn , err
+func (m *MemberService) LogIn(req *pb.LogInReq)(*pb.LogInRes , error){
+	var resp  *pb.LogInRes
+
+	serviceAddress ,err := m.FindService(m.ServicName)
+	if err!=nil{
+		return resp , err
+	}
+
+	conn , err := m.CreateConn(serviceAddress)
+	if err!=nil{
+		return resp , err
+	}
+	defer conn.Close()
+
+	memberServiceClient := pb.NewMemberServiceClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	resp,err = memberServiceClient.LogIn(ctx , req)
+	if err!=nil{
+		return resp , err
+	}else {
+		return resp , nil
+	}
+}
+
+func (m *MemberService) ChangePwd(req *pb.ChangePwdReq)(*pb.ChangePwdRes , error){
+	var resp  *pb.ChangePwdRes
+
+	serviceAddress ,err := m.FindService(m.ServicName)
+	if err!=nil{
+		return resp , err
+	}
+
+	conn , err := m.CreateConn(serviceAddress)
+	if err!=nil{
+		return resp , err
+	}
+	defer conn.Close()
+
+	memberServiceClient := pb.NewMemberServiceClient(conn)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	resp,err = memberServiceClient.ChangePwd(ctx , req)
+	if err!=nil{
+		return resp , err
+	}else {
+		return resp , nil
+	}
 }

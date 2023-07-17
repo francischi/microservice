@@ -2,8 +2,9 @@ package pkg
 
 import (
 	"context"
-	pb "server/proto"
 	"server/pkg/memberModule"
+	"server/pkg/tokenModule"
+	pb "server/proto"
 )
 
 type MemberService struct{
@@ -34,7 +35,12 @@ func (s *MemberService)ChangePwd(ctx context.Context , request *pb.ChangePwdReq)
 	return res,err
 }
 
-func (s *MemberService)ConfirmToken(ctx context.Context , request *pb.ChangePwdReq)( *pb.ChangePwdRes , error){
-	res , err := memberModule.InitMemberController().ChangePwd(ctx , request)
+func (s *MemberService)IsValidJwt(ctx context.Context , request *pb.JwtToken)( *pb.IsValidJwtRes , error){
+	res , err := tokenModule.InitTokenController().IsValidJwt(ctx ,request)
+	return res,err
+}
+
+func (s *MemberService)IsJwtInTime(ctx context.Context , request *pb.JwtToken)( *pb.IsJwtInTimeRes , error){
+	res , err := tokenModule.InitTokenController().IsJwtInTime(ctx ,request)
 	return res,err
 }

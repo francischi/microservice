@@ -19,7 +19,6 @@ func NewMemberController(memberService *MemberService) *MemberController{
 }
 
 func(m *MemberController) Create(g *gin.Context){
-
 	var createReq pb.CreateReq
 
 	g.Bind(&createReq)
@@ -29,6 +28,28 @@ func(m *MemberController) Create(g *gin.Context){
 	}else{
 		m.SuccessRes(g,nil)
 	}
-	
 }
 
+func(m *MemberController) LogIn(g *gin.Context){
+	var logInReq pb.LogInReq
+
+	g.Bind(&logInReq)
+	resp , err := m.MemberService.LogIn(&logInReq)
+	if err!=nil{
+		m.HandleError(g,err)
+	}else{
+		m.SuccessRes(g,resp.Token)
+	}
+}
+
+func(m *MemberController) ChangePwd(g *gin.Context){
+	var changePwdReq pb.ChangePwdReq
+
+	g.Bind(&changePwdReq)
+	_ , err := m.MemberService.ChangePwd(&changePwdReq)
+	if err!=nil{
+		m.HandleError(g,err)
+	}else{
+		m.SuccessRes(g,nil)
+	}	
+}

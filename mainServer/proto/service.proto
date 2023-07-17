@@ -8,6 +8,8 @@ service MemberService{
     rpc Create (createReq) returns (createRes) {}
     rpc LogIn (logInReq) returns (logInRes) {}
     rpc ChangePwd (changePwdReq) returns (changePwdRes) {}
+    rpc IsValidJwt (jwtToken) returns (isValidJwtRes){}
+    rpc IsJwtInTime (jwtToken) returns (isJwtInTimeRes){}
 }
 
 //傳入參數的spec
@@ -58,4 +60,18 @@ message changePwdReq {
 message changePwdRes {
     bool  Success = 1;
     string errMsg = 2;
+}
+
+message jwtToken{
+    string Token =1;
+}
+
+message isValidJwtRes{
+    bool Success = 1;
+    string ErrMsg = 2;
+}
+
+message isJwtInTimeRes{
+    bool Success = 1;
+    string ErrMsg = 2;
 }

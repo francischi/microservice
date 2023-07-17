@@ -34,5 +34,5 @@ func Error2StatusCode(err error)(statusCode int , errMsg string){
 
 		}
 	}
-	return http.StatusBadRequest , "bad request"
+	return http.StatusBadRequest , err.Error()
 }

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strings"
 	"crypto/hmac"
+	"server/pkg/base"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
@@ -12,6 +13,7 @@ import (
 )
 
 type TokenService struct{
+	base.Service
 }
 
 func NewTokenService() *TokenService{
@@ -146,7 +148,7 @@ func (t *TokenService) IsJwtInTime(token string)(bool,error){
 	}
 
 	if helpers.GetTimeStamp() - payload.TimeStamp > expireTime*60{
-		return false,nil
+		return false,t.InvalidArgument("token_expired")
 	}
 	return true,nil
 }
