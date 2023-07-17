@@ -1,0 +1,61 @@
+syntax = "proto3"; 
+
+option go_package = "./proto";
+//定義Service名稱，
+service MemberService{ 
+  //定義api名稱，傳入參數與回傳值
+    rpc Testing (testRequest) returns (testResponse) {}
+    rpc Create (createReq) returns (createRes) {}
+    rpc LogIn (logInReq) returns (logInRes) {}
+    rpc ChangePwd (changePwdReq) returns (changePwdRes) {}
+}
+
+//傳入參數的spec
+message testRequest {
+    int64  id = 1;  
+    int64  num1 = 2;
+    int64  num2 = 3;
+    int64  num3 = 4;
+}
+
+//回傳值的spec
+message testResponse {
+    string  name = 1;
+    int64   heigh = 2;
+    int64   weight = 3;
+}
+
+message createReq { 
+    string  Name = 1;
+    string  Gender = 2;
+    string  Password = 3;
+    string  Email = 4;
+}
+
+message createRes {
+    bool  Success = 1;
+    string errMsg = 2;
+}
+
+message logInReq {
+    string Account = 1;
+    string Password = 2;
+}
+
+message logInRes {
+    bool  Success = 1;
+    string  token = 2;
+    string errMsg = 3;
+}
+
+message changePwdReq {
+    string  MemberId = 1;  
+    string  OldPassword = 2;
+    string  NewPassword = 3;
+    string  ConfirmPassword = 4;
+}
+
+message changePwdRes {
+    bool  Success = 1;
+    string errMsg = 2;
+}

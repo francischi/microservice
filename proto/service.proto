@@ -1,0 +1,23 @@
+syntax = "proto3"; 
+
+option go_package = "./proto";
+//定義Service名稱，
+service SimpleService{ 
+  //定義api名稱，傳入參數與回傳值
+    rpc Testing (testRequest) returns (testResponse) {}
+}
+
+//傳入參數的spec
+message testRequest {
+    int64  id = 1;  
+    int64  num1 = 2;
+    int64  num2 = 3;
+    int64  num3 = 4;
+}
+
+//回傳值的spec
+message testResponse {
+    string  name = 1;
+    int64   heigh = 2;
+    int64   weight = 3;
+}
