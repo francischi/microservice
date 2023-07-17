@@ -1,0 +1,10 @@
+FROM golang:1.18.2-alpine
+RUN     mkdir -p /app
+WORKDIR /app
+# COPY ./pkg/* ./proto/* ./go.mod ./go.sum ./main.go .
+COPY . .
+RUN    go mod download
+RUN    go build -o app
+RUN    go run ./pkg/migrate/migrate.go
+EXPOSE 8081
+ENTRYPOINT  ["./app"]

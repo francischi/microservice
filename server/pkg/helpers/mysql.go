@@ -38,11 +38,11 @@ func InitMySql()(err error , db *gorm.DB)  {
 
 	SqlSession,err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err !=nil{
-		panic(err.Error())
+		return err,SqlSession
 	}
 	sqlDB, err := SqlSession.DB()
 	if err != nil {
-		panic(err.Error())
+		return err,SqlSession
 	}
 	sqlDB.SetMaxIdleConns(maxIdleConn)
 	sqlDB.SetMaxOpenConns(maxPoolConn)
