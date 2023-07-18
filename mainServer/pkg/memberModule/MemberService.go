@@ -52,7 +52,6 @@ func (m *MemberService) LogIn(req *pb.LogInReq)(*pb.LogInRes , error){
 	if err!=nil{
 		return resp , err
 	}
-
 	conn , err := m.CreateConn(serviceAddress)
 	if err!=nil{
 		return resp , err

@@ -72,7 +72,7 @@ func main() {
 		log.Fatalf("failed to connect db: %v", err)
 	}
 	// Create gRPC Server
-	address := fmt.Sprintf("%s:%s",serviceHost,servicePort)
+	address := fmt.Sprintf(":%s",servicePort)
 	lis, err := net.Listen("tcp", address)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -87,7 +87,6 @@ func main() {
 	s := grpc.NewServer()
 	log.Println("gRPC server is running.")
 	
-	// memberController := memberModule.InitMemberController()
 	var memberService pkg.MemberService
 
 	pb.RegisterMemberServiceServer(s, &memberService)

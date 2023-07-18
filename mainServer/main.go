@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"mainServer/pkg"
 	"mainServer/pkg/helpers"
@@ -22,5 +23,7 @@ func main(){
 		})
 	})
 
-	router.Run(":9000")
+	port := helpers.GetEnvStr("port")
+	serverPort := fmt.Sprintf(":%s",port)
+	router.Run(serverPort)
 }

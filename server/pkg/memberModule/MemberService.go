@@ -52,8 +52,8 @@ func (s *MemberService) LogIn(dto *dtos.LogInDto)(token string ,err error){
 	if err := dto.Check();err!=nil{
 		return "",s.InvalidArgument(err.Error())
 	}
-	memberModel ,err:= s.MemberRepo.GetMemberByEmail(dto.Account)
 
+	memberModel ,err:= s.MemberRepo.GetMemberByEmail(dto.Account)
 	if err!=nil{
 		return "",err
 	}

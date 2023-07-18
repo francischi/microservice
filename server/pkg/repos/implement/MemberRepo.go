@@ -40,6 +40,9 @@ func (m *MemberRepo) GetMember(memberId string)(member models.MemberModel , err 
 func (m *MemberRepo) GetMemberByEmail(email string)(member models.MemberModel , err error){
 	var model models.MemberModel
 	error := m.DBconn.First(&model , "email=?",email).Error
+	if errors.Is(error, gorm.ErrRecordNotFound){
+		return model , m.InvalidArgument("no_matched_account")
+	}
 	if error!=nil{
 		return model , m.SystemError("member_repo_error :"+error.Error())
 	}
