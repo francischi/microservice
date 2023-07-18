@@ -2,13 +2,18 @@
 
 ## **Introduction**
 ```
-
 本專案將以會員系統示範使用golang建置並以clean architecture為基礎之微服務架構。
-
 ```
 
+## 技術點
+* clean architecture
+* microservice
+* docker
+* resful api
+* grpc
+* consul
 
----
+
 ## **Microservice**
 ```
 將原本單體式架構拆成各個小服務，能夠增加服務開發與部屬上的獨立性，專案擴大時開發管理的成本也能有效的下降
@@ -22,7 +27,6 @@
 
 <br>
 
----
 
 ## **Architecture**
 ```
@@ -30,9 +34,10 @@ restful 較能展現對於資源的使用意圖，且串接較容易因此對於
 透過mainServer進行restful api對對應服務的grpc request轉發，
 各個服務之間則使用gRPC進行溝通，使用註冊發現中心能夠更好的管理服務且能夠進行服務的擴展與平衡(load balance)。
 ```
-對外 : restful API
-服務間 : gRPC
-服務間管理 : 註冊發現中心 (consul)
+
+* 對外 : restful API
+* 服務間 : gRPC
+* 服務間管理 : 註冊發現中心 (consul)
 
 ### mainServer
 ```
@@ -51,7 +56,6 @@ restful 較能展現對於資源的使用意圖，且串接較容易因此對於
 
 <br>
 
----
 
 ## **note**
 載golang grpc套件
