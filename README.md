@@ -56,6 +56,13 @@ restful 較能展現對於資源的使用意圖，且串接較容易因此對於
 
 <br>
 
+## **打開方式**
+* 啟動mysql 建立db golang_example
+* 啟動consul ( docker )
+* 啟動server ( docker-compose up -d )
+* 啟動mainServer ( docker-compose up -d )
+
+<br>
 
 ## **note**
 載golang grpc套件
