@@ -1,0 +1,11 @@
+version: "3"
+services:
+  machine:
+    build: .
+    container_name: main_service
+    image: main_service
+    restart: always
+    ports:
+      - '9000:9000'
+    env_file:
+      - .env
