@@ -1,7 +1,7 @@
 package memberModule
 
 import (
-	// "fmt"
+	"fmt"
 	"time"
 	"context"
 	pb "mainServer/proto"
@@ -49,6 +49,7 @@ func (m *MemberService) LogIn(req *pb.LogInReq)(*pb.LogInRes , error){
 	var resp  *pb.LogInRes
 
 	serviceAddress ,err := m.FindService(m.ServicName)
+	fmt.Println(serviceAddress)
 	if err!=nil{
 		return resp , err
 	}
