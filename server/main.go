@@ -30,7 +30,7 @@ func RegisterToConsul(registrationAddress string ,serviceName string, serviceHos
 	}
 	var h [16]byte
 	rand.Read(h[:])
-	// 生成一个全局ID
+	// 生成全局ID
 	id := fmt.Sprintf("helloserver-%s-%d", hex.EncodeToString(h[:]), servicePort)
 	fmt.Println(id)
 	// 註冊到 Consul，包含地址、端口訊息，以及健康檢查
