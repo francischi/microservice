@@ -64,22 +64,48 @@ restful 較能展現對於資源的使用意圖，且串接較容易因此對於
 
 <br>
 
+## **use docker image**
+* create DB
+    ```
+    create db name `golang_example`
+    create database USER & PASSWORD
+    ```
+* start consul 
+    ```
+    docker pull hashicorp/consul:latest
+    docker run -d -p 8500:8500 --restart=always --name=consul hashicorp/consul:latest agent -server -bootstrap -ui -node=1 -client=0.0.0.0
+    ```
+* start api-gateway
+    ```
+    docker pull  francischi/api-gateway
+    docker run -d --name api-gateway -e PORT=9000 -e REGISTRATION_CENTER.ADDRESS=YOUR_IP:8500 -p 9000:9000 francischi/api-gateway
+
+    use `ipconfig` to check YOUR_IP
+    ```
+* start memberservice
+    ```
+    docker pull  francischi/memberservice
+    docker run -d --name member_service -e PORT=8082 -e DB.URL=YOUR_IP -e DB.USERNAME=USER -e DB.PASSWORD=PASSWORD -p 8082:8082 francischi/memberservice 
+    ```
+
+<br>
+
 ## **note**
-載golang grpc套件
-```
-go get github.com/golang/protobuf/protoc-gen-go 
-go get -t github.com/grpc/grpc-go    
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-```
+* 載golang grpc套件
+    ```
+    go get github.com/golang/protobuf/protoc-gen-go 
+    go get -t github.com/grpc/grpc-go    
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+    ```
 
-生成protocal buffer
-```
-protoc --go-grpc_out=. ./proto/*.proto
-protoc --go_out=. ./proto/*.proto
-```
+* create protocal buffer
+    ```
+    protoc --go-grpc_out=. ./proto/*.proto
+    protoc --go_out=. ./proto/*.proto
+    ```
 
-安裝註冊中心
-```
-docker pull hashicorp/consul:latest
-docker run -d -p 8500:8500 --restart=always --name=consul hashicorp/consul:latest agent -server -bootstrap -ui -node=1 -client=0.0.0.0
-```
+* start consul
+    ```
+    docker pull hashicorp/consul:latest
+    docker run -d -p 8500:8500 --restart=always --name=consul hashicorp/consul:latest agent -server -bootstrap -ui -node=1 -client=0.0.0.0
+    ```

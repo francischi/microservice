@@ -12,9 +12,9 @@ func NewRedisClient() *redis.Client{
 }
 
 func InitRedisConn()(err error , client *redis.Client){
-	url := GetEnvStr("redis.url")
-	port := GetEnvStr("redis.port")
-	pwd := GetEnvStr("redis.password")
+	url := GetEnvStr("REDIS.URL")
+	port := GetEnvStr("REDIS.PORT")
+	pwd := GetEnvStr("REDIS.PASSWORD")
 
 	RedisClient := redis.NewClient(&redis.Options{
 		Addr:     url+":"+port,

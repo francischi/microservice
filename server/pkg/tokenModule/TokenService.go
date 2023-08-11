@@ -90,7 +90,7 @@ func (t *TokenService) createSign(header string ,paylaod string , key string)[]b
 }
 
 func (t *TokenService) getSecretKey()(string,error){
-	key := helpers.GetEnvStr("jwt.key")
+	key := helpers.GetEnvStr("JWT.KEY")
 	if len(key) == 0{
 		return "",errors.New("env_setting_error")
 	}
@@ -98,7 +98,7 @@ func (t *TokenService) getSecretKey()(string,error){
 }
 
 func (t *TokenService) getExpireTime()(int ,error){
-	expireTime ,err := helpers.GetEnvInt("jwt.expireTime")
+	expireTime ,err := helpers.GetEnvInt("JWT.EXPIRE_TIME")
 	if err!=nil{
 		return 0,errors.New("jwtExpireTime missing")
 	}

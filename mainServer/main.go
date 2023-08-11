@@ -23,7 +23,7 @@ func main(){
 		})
 	})
 
-	port := helpers.GetEnvStr("port")
+	port := helpers.GetEnvStr("PORT")
 	serverPort := fmt.Sprintf(":%s",port)
 	router.Run(serverPort)
 }

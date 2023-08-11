@@ -83,7 +83,7 @@ type envConfig struct {
 }
 
 func (b *Service) GetEnv() envConfig {
-	rcAddress := os.Getenv("registrationCenter.address")
+	rcAddress := os.Getenv("REGISTRATION_CENTER.ADDRESS")
 
 	var  envConfig envConfig
 	envConfig.RcAddress = rcAddress

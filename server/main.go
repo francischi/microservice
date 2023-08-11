@@ -63,10 +63,10 @@ func main() {
 	if err := helpers.InitEnvSetting();err!=nil{
 		log.Fatalf("init env err: %v", err)
 	}
-	serviceHost := helpers.GetEnvStr("host")
-	servicePort := helpers.GetEnvStr("port")
-	serviceName := helpers.GetEnvStr("service.name")
-	rcAddress := helpers.GetEnvStr("registrationCenter.address")
+	serviceHost := helpers.GetEnvStr("HOST")
+	servicePort := helpers.GetEnvStr("PORT")
+	serviceName := helpers.GetEnvStr("SERVICE.NAME")
+	rcAddress := helpers.GetEnvStr("REGISTRATION_CENTER.ADDRESS")
 
 	if err,_ := helpers.InitMySql();err !=nil{
 		log.Fatalf("failed to connect db: %v", err)

@@ -21,13 +21,13 @@ func InitMySql()(err error , db *gorm.DB)  {
     if envErr != nil {
         log.Fatal("Error loading .env file")
     }
-	url := GetEnvStr("db.url")
-  	userName := GetEnvStr("db.username")
-	passWord := GetEnvStr("db.password")
-	dbName := GetEnvStr("db.name")
-	port := GetEnvStr("db.port")
-	maxIdleConn,_ := GetEnvInt("db.maxIdleConn")
-	maxPoolConn,_ := GetEnvInt("db.maxPoolConn")
+	url := GetEnvStr("DB.URL")
+  	userName := GetEnvStr("DB.USERNAME")
+	passWord := GetEnvStr("DB.PASSWORD")
+	dbName := GetEnvStr("DB.NAME")
+	port := GetEnvStr("DB.PORT")
+	maxIdleConn,_ := GetEnvInt("DB.MAX_IDLE_CONN")
+	maxPoolConn,_ := GetEnvInt("DB.MAX_POOL_CONN")
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		userName,
 		passWord,
