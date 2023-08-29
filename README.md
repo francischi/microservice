@@ -101,7 +101,7 @@ restful 較能展現對於資源的使用意圖，且串接較容易因此對於
 * start memberservice
     ```
     docker pull  francischi/memberservice
-    docker run -d --name member_service -e PORT=8082 -e DB.URL=YOUR_IP -e DB.USERNAME=USER -e DB.PASSWORD=PASSWORD -p 8082:8082 francischi/memberservice 
+    docker run -d --name member_service_1 -e PORT=8081 -e HOST=YOUR_IP -e DB.URL=DB_URL -e DB.USERNAME=USER -e DB.PASSWORD=PASSWORD -e REGISTRATION_CENTER.ADDRESS=REGISTRATION_CENTER_IP:8500 -p 8081:8081 francischi/memberservice 
     ```
 
 <br>
